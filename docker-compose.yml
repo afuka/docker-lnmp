@@ -4,7 +4,7 @@ services:
     build: 
       context: ./nginx
       args:
-        NGINX_VERSION: $NGINX_VERSION
+        NGINX_VERSION: ${NGINX_VERSION}
     depends_on:
       - php
     ports: 
@@ -25,10 +25,10 @@ services:
     build: 
       context: ./php
       args:
-        PHP_VERSION: $PHP_VERSION
-        PHP_REDIS_VERSION: $PHP_REDIS_VERSION
-        SWOOLE_VERSION: $SWOOLE_VERSION
-        AMQP_VERSION: $AMQP_VERSION
+        PHP_VERSION: ${PHP_VERSION}
+        PHP_REDIS_VERSION: ${PHP_REDIS_VERSION}
+        SWOOLE_VERSION: ${SWOOLE_VERSION}
+        AMQP_VERSION: ${AMQP_VERSION}
     ports:
       - "9501:9501"
     volumes:
@@ -39,6 +39,9 @@ services:
     networks:
       - frontend
       - backend  
+    extra_hosts:
+      - "codeload.github.com:140.82.112.10"
+      - "github.com:140.82.112.4"
     restart: always
     container_name: php
 
