@@ -1,6 +1,4 @@
-FROM daocloud.io/library/nginx:${NGINX_VERSION}-alpine
-
-ENV NGINX_VERSION="1.18"
+FROM daocloud.io/library/nginx:1.18-alpine
 
 ### set timezome
 ENV TZ=Asia/Shanghai

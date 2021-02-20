@@ -14,6 +14,7 @@ RUN cd ~ \
     && mkdir -p /usr/src/php/ext \
     && mv phpredis-$PHP_REDIS_VERSION /usr/src/php/ext/redis \
     && docker-php-ext-install redis \
+    && docker-php-ext-install libxml2 pdo_mysql mysqli pcntl gd sockets soap \
     && wget https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz --no-check-certificate \
     && tar -zxvf v${SWOOLE_VERSION}.tar.gz \
     && mkdir -p /usr/src/php/ext \
@@ -25,6 +26,7 @@ RUN cd ~ \
     && apk add rabbitmq-c-dev \
     && docker-php-ext-install amqp \
     && apk add libstdc++ libpng-dev \
-    && docker-php-ext-install pdo_mysql mysqli pcntl gd sockets soap \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
+    && curl -sS https://getcomposer.org/installer | php --install-dir=/usr/bin/ --filename=composer \
     && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+
+CMD [ "php-fpm" ]
