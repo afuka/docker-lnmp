@@ -3,8 +3,6 @@ services:
   nginx:
     build: 
       context: ./nginx
-      args:
-        NGINX_VERSION: ${NGINX_VERSION}
     depends_on:
       - php
     ports: 
@@ -24,11 +22,6 @@ services:
   php:
     build: 
       context: ./php
-      args:
-        PHP_VERSION: ${PHP_VERSION}
-        PHP_REDIS_VERSION: ${PHP_REDIS_VERSION}
-        SWOOLE_VERSION: ${SWOOLE_VERSION}
-        AMQP_VERSION: ${AMQP_VERSION}
     ports:
       - "9501:9501"
     volumes:
@@ -46,21 +39,23 @@ services:
     container_name: php
 
   mysql:
-    build: ./mysql
+    build: 
+      context: ./mysql
     ports:
       - "3306:3306"
     volumes:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/my.cnf:/etc/my.cnf
     environment:
-      MYSQL_ROOT_PASSWORD: 11111111
+      MYSQL_ROOT_PASSWORD: "11111111"
     networks:
       - backend
     restart: always
     container_name: mysql
 
   redis:
-    build: ./redis
+    build: 
+      context: ./redis
     ports:
       - "6379:6379"
     volumes:
@@ -88,8 +83,8 @@ services:
       - ./rabbitmq/data:/var/lib/rabbitmq
     #环境变量
     environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=123456
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "123456"
     networks:
       - backend
 networks:
