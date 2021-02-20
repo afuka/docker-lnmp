@@ -26,6 +26,7 @@ services:
       context: ./php
       args:
         PHP_VERSION: $PHP_VERSION
+        PHP_REDIS_VERSION: $PHP_REDIS_VERSION
         SWOOLE_VERSION: $SWOOLE_VERSION
         AMQP_VERSION: $AMQP_VERSION
     ports:

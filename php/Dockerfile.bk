@@ -9,7 +9,7 @@ COPY config/php.ini /usr/local/etc/php
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 RUN cd ~ \
-    && wget https://github.com/phpredis/phpredis/archive/$PHP_REDIS_VERSION.tar.gz \
+    && wget https://github.com/phpredis/phpredis/archive/$PHP_VERSION.tar.gz \
     && tar -zxvf $PHP_VERSION.tar.gz \
     && mkdir -p /usr/src/php/ext \
     && mv phpredis-$PHP_VERSION /usr/src/php/ext/redis \
@@ -19,6 +19,7 @@ RUN cd ~ \
     && mv amqp-$AMQP_VERSION /usr/src/php/ext/amqp \
     && apk add rabbitmq-c-dev \
     && docker-php-ext-install amqp \
+
     && apk add libstdc++ libpng-dev \
     && cd ~ \
     && wget https://github.com/swoole/swoole-src/archive/v$SWOOLE_VERSION.tar.gz \
@@ -26,6 +27,8 @@ RUN cd ~ \
     && mkdir -p /usr/src/php/ext \
     && mv swoole-src-$SWOOLE_VERSION /usr/src/php/ext/swoole \
     && docker-php-ext-install swoole \
+
     && docker-php-ext-install pdo_mysql mysqli pcntl gd sockets soap \
+
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
     && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
